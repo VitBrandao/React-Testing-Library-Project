@@ -28,7 +28,7 @@ describe('Testa se a página About contém as informações sobre a Pokédex', (
   it('Testa se a página contém a imagem de uma Pokédex', () => {
     render(<About />);
 
-    const pokedexImg = screen.getByRole('img', { name: /pokedex-image/i });
+    const pokedexImg = screen.getByAltText(/Pokédex/i);
     const URL = 'https://cdn2.bulbagarden.net/upload/thumb/8/86/Gen_I_Pok%C3%A9dex.png/800px-Gen_I_Pok%C3%A9dex.png';
 
     expect(pokedexImg.src).toContain(URL);

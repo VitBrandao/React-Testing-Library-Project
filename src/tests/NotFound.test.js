@@ -15,7 +15,9 @@ describe('Testando o componente NotFound', () => {
   it('Testa se página mostra a imagem', () => {
     render(<NotFound />);
 
-    const imageNotFound = screen.getByRole('img', { name: /not-found-image/i });
+    const imageNotFound = screen.getByAltText(
+      /Pikachu crying because the page requested was not found/i,
+    );
     const URL = 'https://media.giphy.com/media/kNSeTs31XBZ3G/giphy.gif';
     expect(imageNotFound.src).toBe(URL);
   });
