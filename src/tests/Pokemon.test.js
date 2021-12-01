@@ -1,5 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from '../RenderWIthRouter';
 import pokemons from '../data';
@@ -44,6 +45,46 @@ describe('Testa o componente Pokemon.js', () => {
       const pokeName = pokemons[0].name;
       const pokeAlt = `${pokeName} sprite`;
       expect(pokemonImg.alt).toEqual(pokeAlt);
+    });
+  });
+
+  describe('Testes para o link More Details', () => {
+    it('Testa se o card contém um link de navegação para exibir detalhes', () => {
+      renderWithRouter(<App />);
+
+      const moreDetails = screen.getByRole('link',
+        { name: /more details/i });
+
+      const expectedLink = `http://localhost/pokemons/${pokemons[0].id}`;
+
+      expect(moreDetails.href).toBe(expectedLink);
+    });
+
+    it('Testa se ao clicar no link de navegação, é feito o redirecionamento', () => {
+      renderWithRouter(<App />);
+
+      const moreDetails = screen.getByRole('link',
+        { name: /more details/i });
+
+      userEvent.click(moreDetails);
+      const detailsTitle = `${pokemons[0].name} Details`;
+      const pokemonDetails = screen.getByText(detailsTitle);
+
+      expect(pokemonDetails).toBeDefined();
+    });
+
+    it('Testa se a URL exibida no navegador muda para /pokemon/<id>', () => {
+      const { history } = renderWithRouter(<App />);
+
+      const moreDetails = screen.getByRole('link',
+        { name: /more details/i });
+
+      userEvent.click(moreDetails);
+      const { pathname } = history.location;
+
+      const expectedLink = `/pokemons/${pokemons[0].id}`;
+
+      expect(pathname).toEqual(expectedLink);
     });
   });
 });
