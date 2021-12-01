@@ -2,6 +2,7 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import renderWithRouter from '../RenderWIthRouter';
 import App from '../App';
+import userEvent from '@testing-library/user-event';
 
 describe('Testa o componente Pokemon Details', () => {
   // Declarando em uma constante por questões de lint
@@ -117,6 +118,39 @@ describe('Testa o componente Pokemon Details', () => {
       charmanderLocation.map(
         (location, index) => expect(location.src).toBe(locationsSrc[index]),
       );
+    });
+  });
+
+  describe('Teste se o usuário pode favoritar um pokémon através da página de detalhes', () => {
+    const caterpieURL = 'pokemons/10';
+
+    it('A página deve exibir um checkbox que permite favoritar o Pokémon', () => {
+      const { history } = renderWithRouter(<App />);
+      history.push(caterpieURL);
+
+      // OBS: Esse teste já cobre o requisito:
+      // " O label do checkbox deve conter o texto Pokémon favoritado?; "
+      const checkbox = screen.getByLabelText(/Pokémon Favoritado/i);
+      expect(checkbox).toBeDefined();
+    });
+
+    it('Cliques alternados na checkbox devem adicionar e remover', () => {
+      const { history } = renderWithRouter(<App />);
+      history.push(caterpieURL);
+
+      const checkbox = screen.getByLabelText(/Pokémon Favoritado/i);
+
+      // Primeiro clique
+      userEvent.click(checkbox);
+
+      // Ao clicar, surge um novo elemento img
+      const altText = 'Caterpie is marked as favorite';
+      const isFavorite = screen.getByAltText(altText);
+      expect(isFavorite).toBeDefined();
+
+      // Segundo clique
+      userEvent.click(checkbox);
+      expect(isFavorite).not.toBeInTheDocument();
     });
   });
 });
