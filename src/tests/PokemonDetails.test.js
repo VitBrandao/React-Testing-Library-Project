@@ -62,8 +62,61 @@ describe('Testa o componente Pokemon Details', () => {
   });
 
   describe('Testa se existe uma seção com os mapas contendo as localizações', () => {
-    it('Deverá existir um heading h2 com o texto Game Locations of <name>', () => {
+    // Testando especificações para um novo pokemon
+    const charmanderURL = 'pokemons/4';
 
+    it('Deverá existir um heading h2 com o texto Game Locations of <name>', () => {
+      const { history } = renderWithRouter(<App />);
+      history.push(charmanderURL);
+
+      const gameLocationsOf = screen.getByRole('heading',
+        { name: /Game Locations of/i });
+
+      expect(gameLocationsOf).toHaveTextContent(/charmander/i);
+    });
+
+    it('Todas as localizações devem ser mostradas na seção de detalhes', () => {
+      const { history } = renderWithRouter(<App />);
+      history.push(charmanderURL);
+
+      // OBS: Esse teste também já cobre o requisito:
+      // 'A imagem da localização deve ter um alt <name> location'
+
+      const charmanderLocation = screen.getAllByAltText(/Charmander location/i);
+      // Há um total de 4 localizações
+      const expectedLength = 4;
+      expect(charmanderLocation).toHaveLength(expectedLength);
+    });
+
+    it('Devem ser exibidos, o nome da localização e uma imagem do mapa', () => {
+      const { history } = renderWithRouter(<App />);
+      history.push(charmanderURL);
+
+      // Localizações charmander: 3 locais em Kanto, 1 local em Alola;
+      const kantoLocations = screen.getAllByText(/Kanto/i);
+      const expectedLength = 3;
+      expect(kantoLocations).toHaveLength(expectedLength);
+
+      const alolaLocations = screen.getAllByText(/Alola/i);
+      expect(alolaLocations).toHaveLength(1);
+    });
+
+    it('A imagem da localização deve ter um src com a URL da localização', () => {
+      const { history } = renderWithRouter(<App />);
+      history.push(charmanderURL);
+
+      const charmanderLocation = screen.getAllByAltText(/Charmander location/i);
+
+      const locationsSrc = [
+        'https://cdn2.bulbagarden.net/upload/9/93/Alola_Route_3_Map.png',
+        'https://cdn2.bulbagarden.net/upload/4/4a/Kanto_Route_3_Map.png',
+        'https://cdn2.bulbagarden.net/upload/2/24/Kanto_Route_4_Map.png',
+        'https://cdn2.bulbagarden.net/upload/6/6f/Kanto_Rock_Tunnel_Map.png',
+      ];
+
+      charmanderLocation.map(
+        (location, index) => expect(location.src).toBe(locationsSrc[index]),
+      );
     });
   });
 });
