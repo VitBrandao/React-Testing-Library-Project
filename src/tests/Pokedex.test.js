@@ -121,5 +121,37 @@ describe('Testa o componente Pokedex.js', () => {
         expect(allButton).toBeInTheDocument();
       });
     });
+
+    describe('Teste se a Pokédex contém um botão para resetar o filtro', () => {
+      beforeEach(() => renderWithRouter(<App />));
+
+      it('O texto do botão deve ser All', () => {
+        const allButton = screen.getByRole('button',
+          { name: /All/i });
+
+        expect(allButton).toBeDefined();
+        expect(allButton).toHaveTextContent(/All/i);
+      });
+
+      it('Quando o botão All for clicado, deve mostrar os Pokémons sem filtros', () => {
+        const allButton = screen.getByRole('button',
+          { name: /All/i });
+        const pokeType = screen.getByTestId('pokemon-type');
+
+        userEvent.click(allButton);
+        expect(pokeType).toHaveTextContent(/Electric/i);
+
+        // Ao clicar em 'Próximo Pokémon', o tipo deve mudar de Electric para Fire.
+        const buttonNextPokemon = screen.getByRole('button',
+          { name: /Próximo pokémon/i });
+        userEvent.click(buttonNextPokemon);
+
+        expect(pokeType).toHaveTextContent(/Fire/i);
+      });
+
+      it('Ao carregar a página, o filtro selecionado deverá ser All', () => {
+
+      });
+    });
   });
 });
