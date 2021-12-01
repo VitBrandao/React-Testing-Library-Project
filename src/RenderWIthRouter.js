@@ -13,4 +13,5 @@ const renderWithRouter = (component) => {
     history,
   });
 };
+
 export default renderWithRouter;
