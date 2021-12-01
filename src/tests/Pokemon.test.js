@@ -87,4 +87,26 @@ describe('Testa o componente Pokemon.js', () => {
       expect(pathname).toEqual(expectedLink);
     });
   });
+
+  describe('Teste se existe um ícone de estrela nos Pokémons favoritados', () => {
+    it('O ícone deve ser uma imagem com o devido atributo src', () => {
+      const { history } = renderWithRouter(<App />);
+      
+      const pikachuURL = '/pokemons/25';
+      history.push(pikachuURL);
+
+      const checkbox = screen.getByLabelText(/Pokémon Favoritado/i);
+      userEvent.click(checkbox);
+
+      // Como a única maneira que encontrei de pegar a imagem foi pelo alt, 
+      // esse teste também já cobre o requisito:
+      // 'A imagem deve ter o atributo alt igual a <pokemon> is marked as favorite'
+      const pikachuImg = screen.getByAltText(/Pikachu is marked as favorite/i);
+      expect(pikachuImg).toBeDefined();
+
+      // Teste para src
+      const expectedSrc = 'http://localhost/star-icon.svg';
+      expect(pikachuImg.src).toEqual(expectedSrc);
+    })
+  })
 });
