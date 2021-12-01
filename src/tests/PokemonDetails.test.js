@@ -1,8 +1,8 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import renderWithRouter from '../RenderWIthRouter';
 import App from '../App';
-import userEvent from '@testing-library/user-event';
 
 describe('Testa o componente Pokemon Details', () => {
   // Declarando em uma constante por questões de lint
@@ -121,7 +121,7 @@ describe('Testa o componente Pokemon Details', () => {
     });
   });
 
-  describe('Teste se o usuário pode favoritar um pokémon através da página de detalhes', () => {
+  describe('Teste se o usuário pode favoritar um pokémon na página de detalhes', () => {
     const caterpieURL = 'pokemons/10';
 
     it('A página deve exibir um checkbox que permite favoritar o Pokémon', () => {
