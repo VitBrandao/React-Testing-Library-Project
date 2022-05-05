@@ -97,6 +97,10 @@ describe('Testa o componente Pokedex.js', () => {
       const expectedLength = 7;
       expect(allButtons).toHaveLength(expectedLength);
 
+      // const pokeTypes = [];
+      // pokemons.forEach((pokemon) => { pokeTypes.push(pokemon.type) });
+      // console.log(pokeTypes);
+
       const allTypes = [
         'Electric', 'Fire', 'Bug', 'Poison', 'Psychic', 'Normal', 'Dragon',
       ];
