@@ -10,10 +10,9 @@ The application itself was already developed by [Trybe](https://www.betrybe.com/
 
 <img src="https://miro.medium.com/max/500/1*FdcfXXlYDEDNGToFjA_B4w.jpeg" alt="rtl-logo" size="500" />
 
--
+
 :warning: :brazil: | Nota: o material abaixo é propriedade exclusiva da Trybe, com uso restrito às pessoas estudantes vinculadas à instituição. | :us: Warn: the following content has all the legal rights reserved to Trybe. Its use is reserved to Trybe students. 
 
--
 
 
 ## Lista de requisitos
