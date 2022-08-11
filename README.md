@@ -1,4 +1,4 @@
-### React Testing Library - Pokedéx Tests
+# React Testing Library - Pokedéx Tests
 
 This is a project that I developed in December/2021. 
 
